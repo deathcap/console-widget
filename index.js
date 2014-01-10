@@ -114,6 +114,22 @@
             _this.historyCursor = _this.history.length - 1;
           }
           ev.preventDefault();
+        } else if (key === '<page-up>') {
+          if (ev.shiftKey) {
+            _this.outputNode.scrollByLines(-1);
+          } else if (ev.ctrlKey || ev.metaKey) {
+            _this.outputNode.scrollByLines(-MAX_LINES);
+          } else {
+            _this.outputNode.scrollByPages(-1);
+          }
+        } else if (key === '<page-down>') {
+          if (ev.shiftKey) {
+            _this.outputNode.scrollByLines(1);
+          } else if (ev.ctrlKey || ev.metaKey) {
+            _this.outputNode.scrollByLines(MAX_LINES);
+          } else {
+            _this.outputNode.scrollByPages(1);
+          }
         }
         return console.log(_this.history, _this.historyCursor);
       });
@@ -129,7 +145,7 @@
 
   consoleWidget = new ConsoleWidget();
 
-  for (i = _i = 0; _i <= 10; i = ++_i) {
+  for (i = _i = 0; _i <= 100; i = ++_i) {
     consoleWidget.log("hello " + i);
   }
 

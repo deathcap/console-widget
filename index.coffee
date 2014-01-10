@@ -103,6 +103,21 @@ class ConsoleWidget extends EventEmitter
         @historyCursor += 1
         @historyCursor = @history.length - 1 if @historyCursor > @history.length - 1
         ev.preventDefault()
+      else if key == '<page-up>'
+        if ev.shiftKey
+          @outputNode.scrollByLines(-1)
+        else if ev.ctrlKey or ev.metaKey
+          @outputNode.scrollByLines(-MAX_LINES)
+        else
+          @outputNode.scrollByPages(-1)
+      else if key == '<page-down>'
+        if ev.shiftKey
+          @outputNode.scrollByLines(1)
+        else if ev.ctrlKey or ev.metaKey
+          @outputNode.scrollByLines(MAX_LINES)
+        else
+          @outputNode.scrollByPages(1)
+
       console.log @history, @historyCursor
 
   unregisterEvents: () ->
@@ -110,7 +125,7 @@ class ConsoleWidget extends EventEmitter
 
 consoleWidget = new ConsoleWidget()
 
-for i in [0..10]
+for i in [0..100]
   consoleWidget.log "hello #{i}"
 
 consoleWidget.open('/')
