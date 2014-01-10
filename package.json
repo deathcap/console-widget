@@ -12,6 +12,8 @@
   "dependencies": {
     "vkey": "0.0.3"
   },
-  "peerDependencies": {},
+  "scripts": {
+    "start": "beefy demo.js"
+  },
   "license": "MIT"
 }

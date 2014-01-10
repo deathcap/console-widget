@@ -133,29 +133,8 @@ class ConsoleWidget extends EventEmitter
   unregisterEvents: () ->
     document.body.removeEventListener 'keydown', @onKeydown
 
-consoleWidget = new ConsoleWidget()
+module.exports = (opts) ->
+  new ConsoleWidget(opts)
 
-for i in [0..100]
-  consoleWidget.log "hello #{i}"
 
-consoleWidget.open('/')
 
-consoleWidget.on 'input', (text) ->
-  consoleWidget.log text
-
-document.body.addEventListener 'keydown', (ev) ->
-  return if consoleWidget.isOpen()
-  key = vkey[ev.keyCode]
-  if key == '/'
-    ev.preventDefault()
-    consoleWidget.open('/')
-  else if key == '.'
-    ev.preventDefault()
-    consoleWidget.open('.')
-  else if key == 'T'
-    ev.preventDefault()
-    consoleWidget.open()
-
-# to show off transparency
-document.body.style.background = 'url(http://i.imgur.com/bmm7HK4.png)'
-document.body.style.backgroundSize = '100% auto'
