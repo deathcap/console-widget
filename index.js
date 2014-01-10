@@ -25,7 +25,10 @@ height: 100%;\
   inputNode = document.createElement('input');
 
   inputNode.setAttribute('style', '\
-width: 100%');
+width: 100%;\
+padding: 0px;\
+border: 1px dashed black;\
+');
 
   containerNode.appendChild(outputNode);
 
