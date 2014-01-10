@@ -1,0 +1,6 @@
+# console-widget
+
+## License
+
+MIT
+
