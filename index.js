@@ -17,9 +17,10 @@ color: black;\
 overflow: auto;\
 width: 100%;\
 height: 100%;\
+color: white;\
 ');
 
-  for (i = _i = 0; _i <= 10; i = ++_i) {
+  for (i = _i = 0; _i <= 3; i = ++_i) {
     outputNode.appendChild(document.createTextNode('hello'));
     outputNode.appendChild(document.createElement('br'));
   }
@@ -37,6 +38,15 @@ color: white;\
   containerNode.appendChild(outputNode);
 
   containerNode.appendChild(inputNode);
+
+  document.body.addEventListener('keydown', function(ev) {
+    if (ev.keyCode !== 13) {
+      return;
+    }
+    outputNode.appendChild(document.createTextNode(inputNode.value));
+    outputNode.appendChild(document.createElement('br'));
+    return inputNode.value = '';
+  });
 
   document.body.appendChild(containerNode);
 

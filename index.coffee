@@ -12,9 +12,10 @@ outputNode.setAttribute 'style', '
 overflow: auto;
 width: 100%;
 height: 100%;
+color: white;
 '
 
-for i in [0..10]
+for i in [0..3]
   outputNode.appendChild(document.createTextNode('hello'))
   outputNode.appendChild(document.createElement('br'))
 
@@ -29,6 +30,16 @@ color: white;
 
 containerNode.appendChild(outputNode)
 containerNode.appendChild(inputNode)
+
+document.body.addEventListener 'keydown', (ev) ->
+  return if ev.keyCode != 13
+
+  outputNode.appendChild(document.createTextNode(inputNode.value))
+  outputNode.appendChild(document.createElement('br'))
+  # TODO: on log, auto-scroll down, discard last lines
+  # TODO: on input, emit event
+
+  inputNode.value = ''
 
 document.body.appendChild(containerNode)
 document.body.style.backgroundColor = 'black'   # to show transparency
