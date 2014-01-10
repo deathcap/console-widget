@@ -9,9 +9,9 @@ for (var i = 0; i < 100; ++i)
 
 var lines = [
   'Welcome to the console-widget demonstration!',
-  'Press escape to close, and / . or T to open',
   'Recall history with the up/down arrow keys',
-  'And try pgup/pgdn (+shift/cmd) to scroll'
+  'And try pgup/pgdn (+shift/cmd) to scroll',
+  'Press escape to close, and / . or T to open',
   ];
 lines.forEach(function(line) {
   consoleWidget.log(line);
