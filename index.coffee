@@ -1,6 +1,8 @@
 
 EventEmitter = (require 'events').EventEmitter
 
+MAX_LINES = 999
+
 class ConsoleWidget extends EventEmitter
   constructor: () ->
     @createNodes()
@@ -23,6 +25,18 @@ class ConsoleWidget extends EventEmitter
     @setInput(text) if text?
     @focusInput()
 
+  log: (text) ->
+    @logNode(document.createTextNode(text))
+
+  logNode: (node) ->
+    @outputNode.appendChild(node)
+    @outputNode.appendChild(document.createElement('br'))
+    @scrollOutput()
+    # TODO: discard last lines
+  
+  scrollOutput: () ->
+    @outputNode.scrollByLines(MAX_LINES + 1)
+
   createNodes: () ->
     @containerNode = document.createElement('div')
     @containerNode.setAttribute 'style', '
@@ -40,10 +54,6 @@ class ConsoleWidget extends EventEmitter
     height: 100%;
     '
 
-    for i in [0..3]
-      @outputNode.appendChild(document.createTextNode('hello'))
-      @outputNode.appendChild(document.createElement('br'))
-
     @inputNode = document.createElement('input')
     @inputNode.setAttribute 'style', '
     width: 100%;
@@ -58,11 +68,6 @@ class ConsoleWidget extends EventEmitter
 
     document.body.appendChild(@containerNode)  # note: starts off hidden
 
-  log: (text) ->
-    @outputNode.appendChild(document.createTextNode(text))
-    @outputNode.appendChild(document.createElement('br'))
-    # TODO: on log, auto-scroll down, discard last lines
-
   registerEvents: () ->
     document.body.addEventListener 'keydown', @onKeydown = (ev) =>
       return if ev.keyCode != 13
@@ -74,6 +79,10 @@ class ConsoleWidget extends EventEmitter
     document.body.removeEventListener 'keydown', @onKeydown
 
 consoleWidget = new ConsoleWidget()
+
+for i in [0..10]
+  consoleWidget.log "hello #{i}"
+
 consoleWidget.open('/')
 
 consoleWidget.on 'input', (text) ->
