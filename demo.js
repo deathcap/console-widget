@@ -3,8 +3,19 @@
 var consoleWidget = require('./')();
 var vkey = require('vkey');
 
+// to create a scrollback buffer
 for (var i = 0; i < 100; ++i)
   consoleWidget.log('hello '+i);
+
+var lines = [
+  'Welcome to the console-widget demonstration!',
+  'Press escape to close, and / . or T to open',
+  'Recall history with the up/down arrow keys',
+  'And try pgup/pgdn (+shift/cmd) to scroll'
+  ];
+lines.forEach(function(line) {
+  consoleWidget.log(line);
+});
 
 consoleWidget.open('/');
 
