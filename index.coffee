@@ -7,9 +7,9 @@ class ConsoleWidget extends EventEmitter
   constructor: (@opts) ->
     @opts ?= {}
     @opts.widthPx ?= 200
-
     @opts.rows ?= 10
     @opts.lineHeightPx ?= 20
+    @opts.font ?= '12pt Menlo, Courier, \'Courier New\', monospace'
 
     @createNodes()
     @registerEvents()
@@ -53,6 +53,7 @@ class ConsoleWidget extends EventEmitter
     visibility: hidden;
     bottom: 0px;
     position: absolute;
+    font: #{@opts.font};
     "
 
     @outputNode = document.createElement('div')
@@ -64,14 +65,15 @@ class ConsoleWidget extends EventEmitter
     # TODO: scrollbar styles for better visibility 
 
     @inputNode = document.createElement('input')
-    @inputNode.setAttribute 'style', '
+    @inputNode.setAttribute 'style', "
     width: 100%;
     height: #{@opts.lineHeightPx}px;
     padding: 0px;
     border: 1px dashed white;
     background-color: transparent;
     color: white;
-    '
+    font: #{@opts.font};
+    "
 
     @containerNode.appendChild(@outputNode)
     @containerNode.appendChild(@inputNode)

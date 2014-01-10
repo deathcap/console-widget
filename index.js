@@ -12,7 +12,7 @@
     __extends(ConsoleWidget, _super);
 
     function ConsoleWidget(opts) {
-      var _base, _base1, _base2;
+      var _base, _base1, _base2, _base3;
       this.opts = opts;
       if (this.opts == null) {
         this.opts = {};
@@ -25,6 +25,9 @@
       }
       if ((_base2 = this.opts).lineHeightPx == null) {
         _base2.lineHeightPx = 20;
+      }
+      if ((_base3 = this.opts).font == null) {
+        _base3.font = '12pt Menlo, Courier, \'Courier New\', monospace';
       }
       this.createNodes();
       this.registerEvents();
@@ -73,18 +76,11 @@
 
     ConsoleWidget.prototype.createNodes = function() {
       this.containerNode = document.createElement('div');
-      this.containerNode.setAttribute('style', "    width: " + this.opts.widthPx + "px;    height: " + (this.opts.lineHeightPx * this.opts.rows) + "px;    border: 1px solid white;    color: white;    visibility: hidden;    bottom: 0px;    position: absolute;    ");
+      this.containerNode.setAttribute('style', "    width: " + this.opts.widthPx + "px;    height: " + (this.opts.lineHeightPx * this.opts.rows) + "px;    border: 1px solid white;    color: white;    visibility: hidden;    bottom: 0px;    position: absolute;    font: " + this.opts.font + ";    ");
       this.outputNode = document.createElement('div');
       this.outputNode.setAttribute('style', "    overflow-y: scroll;     width: 100%;    height: " + (this.opts.lineHeightPx * (this.opts.rows - 1)) + "px;    ");
       this.inputNode = document.createElement('input');
-      this.inputNode.setAttribute('style', '\
-    width: 100%;\
-    height: #{@opts.lineHeightPx}px;\
-    padding: 0px;\
-    border: 1px dashed white;\
-    background-color: transparent;\
-    color: white;\
-    ');
+      this.inputNode.setAttribute('style', "    width: 100%;    height: " + this.opts.lineHeightPx + "px;    padding: 0px;    border: 1px dashed white;    background-color: transparent;    color: white;    font: " + this.opts.font + ";    ");
       this.containerNode.appendChild(this.outputNode);
       this.containerNode.appendChild(this.inputNode);
       return document.body.appendChild(this.containerNode);
