@@ -84,7 +84,8 @@
     };
 
     ConsoleWidget.prototype.scrollOutput = function() {
-      return this.outputNode.scrollByLines(MAX_LINES + 1);
+      var _base;
+      return typeof (_base = this.outputNode).scrollByLines === "function" ? _base.scrollByLines(MAX_LINES + 1) : void 0;
     };
 
     ConsoleWidget.prototype.createNodes = function() {
@@ -102,7 +103,7 @@
     ConsoleWidget.prototype.registerEvents = function() {
       var _this = this;
       return document.body.addEventListener('keydown', this.onKeydown = function(ev) {
-        var key;
+        var key, _base, _base1, _base2, _base3, _base4, _base5, _base6, _base7;
         key = vkey[ev.keyCode];
         if (key === '<enter>') {
           if (_this.inputNode.value.length === 0) {
@@ -114,7 +115,9 @@
           return _this.inputNode.value = '';
         } else if (key === '<up>') {
           if (ev.shiftKey) {
-            _this.outputNode.scrollByLines(-1);
+            if (typeof (_base = _this.outputNode).scrollByLines === "function") {
+              _base.scrollByLines(-1);
+            }
           } else {
             if (_this.history[_this.historyCursor] != null) {
               _this.inputNode.value = _this.history[_this.historyCursor];
@@ -127,7 +130,9 @@
           return ev.preventDefault();
         } else if (key === '<down>') {
           if (ev.shiftKey) {
-            _this.outputNode.scrollByLines(1);
+            if (typeof (_base1 = _this.outputNode).scrollByLines === "function") {
+              _base1.scrollByLines(1);
+            }
           } else {
             if (_this.history[_this.historyCursor] != null) {
               _this.inputNode.value = _this.history[_this.historyCursor];
@@ -140,19 +145,19 @@
           return ev.preventDefault();
         } else if (key === '<page-up>') {
           if (ev.shiftKey) {
-            return _this.outputNode.scrollByLines(-1);
+            return typeof (_base2 = _this.outputNode).scrollByLines === "function" ? _base2.scrollByLines(-1) : void 0;
           } else if (ev.ctrlKey || ev.metaKey) {
-            return _this.outputNode.scrollByLines(-MAX_LINES);
+            return typeof (_base3 = _this.outputNode).scrollByLines === "function" ? _base3.scrollByLines(-MAX_LINES) : void 0;
           } else {
-            return _this.outputNode.scrollByPages(-1);
+            return typeof (_base4 = _this.outputNode).scrollByPages === "function" ? _base4.scrollByPages(-1) : void 0;
           }
         } else if (key === '<page-down>') {
           if (ev.shiftKey) {
-            return _this.outputNode.scrollByLines(1);
+            return typeof (_base5 = _this.outputNode).scrollByLines === "function" ? _base5.scrollByLines(1) : void 0;
           } else if (ev.ctrlKey || ev.metaKey) {
-            return _this.outputNode.scrollByLines(MAX_LINES);
+            return typeof (_base6 = _this.outputNode).scrollByLines === "function" ? _base6.scrollByLines(MAX_LINES) : void 0;
           } else {
-            return _this.outputNode.scrollByPages(1);
+            return typeof (_base7 = _this.outputNode).scrollByPages === "function" ? _base7.scrollByPages(1) : void 0;
           }
         } else if (key === '<escape>') {
           return _this.close();
