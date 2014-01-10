@@ -1,45 +1,60 @@
 
-containerNode = document.createElement('div')
-containerNode.setAttribute 'style', '
-width: 200px;
-height: 100px;
-border: 1px solid white;
-color: black;
-'
+EventEmitter = (require 'events').EventEmitter
 
-outputNode = document.createElement('div')
-outputNode.setAttribute 'style', '
-overflow-y: scroll;
-width: 100%;
-height: 100%;
-color: white;
-'
+class ConsoleWidget
+  constructor: () ->
+    @createNodes()
+    @registerEvents()
 
-for i in [0..3]
-  outputNode.appendChild(document.createTextNode('hello'))
-  outputNode.appendChild(document.createElement('br'))
+  createNodes: () ->
+    @containerNode = document.createElement('div')
+    @containerNode.setAttribute 'style', '
+    width: 200px;
+    height: 100px;
+    border: 1px solid white;
+    color: black;
+    '
 
-inputNode = document.createElement('input')
-inputNode.setAttribute 'style', '
-width: 100%;
-padding: 0px;
-border: 1px dashed white;
-background-color: transparent;
-color: white;
-'
+    @outputNode = document.createElement('div')
+    @outputNode.setAttribute 'style', '
+    overflow-y: scroll;
+    width: 100%;
+    height: 100%;
+    color: white;
+    '
 
-containerNode.appendChild(outputNode)
-containerNode.appendChild(inputNode)
+    for i in [0..3]
+      @outputNode.appendChild(document.createTextNode('hello'))
+      @outputNode.appendChild(document.createElement('br'))
 
-document.body.addEventListener 'keydown', (ev) ->
-  return if ev.keyCode != 13
+    @inputNode = document.createElement('input')
+    @inputNode.setAttribute 'style', '
+    width: 100%;
+    padding: 0px;
+    border: 1px dashed white;
+    background-color: transparent;
+    color: white;
+    '
 
-  outputNode.appendChild(document.createTextNode(inputNode.value))
-  outputNode.appendChild(document.createElement('br'))
-  # TODO: on log, auto-scroll down, discard last lines
-  # TODO: on input, emit event
+    @containerNode.appendChild(@outputNode)
+    @containerNode.appendChild(@inputNode)
 
-  inputNode.value = ''
+  registerEvents: () ->
+    document.body.addEventListener 'keydown', @onKeydown = (ev) =>
+      return if ev.keyCode != 13
 
-document.body.appendChild(containerNode)
+      @outputNode.appendChild(document.createTextNode(@inputNode.value))
+      @outputNode.appendChild(document.createElement('br'))
+      # TODO: on log, auto-scroll down, discard last lines
+      # TODO: on input, emit event
+
+      @inputNode.value = ''
+
+
+  unregisterEvents: () ->
+    document.body.removeEventListener 'keydown', @onKeydown
+
+consoleWidget = new ConsoleWidget()
+
+document.body.appendChild(consoleWidget.containerNode)
 document.body.style.backgroundColor = 'black'   # to show transparency
