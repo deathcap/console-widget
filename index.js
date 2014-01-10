@@ -101,14 +101,18 @@
           _this.emit('input', _this.inputNode.value);
           _this.inputNode.value = '';
         } else if (key === '<up>') {
-          _this.inputNode.value = _this.history[_this.historyCursor];
+          if (_this.history[_this.historyCursor] != null) {
+            _this.inputNode.value = _this.history[_this.historyCursor];
+          }
           _this.historyCursor -= 1;
           if (_this.historyCursor < 0) {
             _this.historyCursor = 0;
           }
           ev.preventDefault();
         } else if (key === '<down>') {
-          _this.inputNode.value = _this.history[_this.historyCursor];
+          if (_this.history[_this.historyCursor] != null) {
+            _this.inputNode.value = _this.history[_this.historyCursor];
+          }
           _this.historyCursor += 1;
           if (_this.historyCursor > _this.history.length - 1) {
             _this.historyCursor = _this.history.length - 1;

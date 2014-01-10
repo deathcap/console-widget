@@ -94,12 +94,12 @@ class ConsoleWidget extends EventEmitter
         @emit 'input', @inputNode.value
         @inputNode.value = ''
       else if key == '<up>'
-        @inputNode.value = @history[@historyCursor]
+        @inputNode.value = @history[@historyCursor] if @history[@historyCursor]?
         @historyCursor -= 1
         @historyCursor = 0 if @historyCursor < 0
         ev.preventDefault()
       else if key == '<down>'
-        @inputNode.value = @history[@historyCursor]
+        @inputNode.value = @history[@historyCursor] if @history[@historyCursor]?
         @historyCursor += 1
         @historyCursor = @history.length - 1 if @historyCursor > @history.length - 1
         ev.preventDefault()
