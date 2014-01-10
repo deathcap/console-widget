@@ -12,6 +12,9 @@ class ConsoleWidget extends EventEmitter
     @opts.lineHeightPx ?= 20
     @opts.font ?= '12pt Menlo, Courier, \'Courier New\', monospace'
 
+    @history = []
+    @historyCursor = @history.length
+
     @createNodes()
     @registerEvents()
 
@@ -86,11 +89,21 @@ class ConsoleWidget extends EventEmitter
       key = vkey[ev.keyCode]
 
       if key == '<enter>'
-        @lastInput = @inputNode.value
+        @history.push @inputNode.value
+        @historyCursor = @history.length - 1
         @emit 'input', @inputNode.value
         @inputNode.value = ''
       else if key == '<up>'
-        @inputNode.value = @lastInput if @lastInput?
+        @inputNode.value = @history[@historyCursor]
+        @historyCursor -= 1
+        @historyCursor = 0 if @historyCursor < 0
+        ev.preventDefault()
+      else if key == '<down>'
+        @inputNode.value = @history[@historyCursor]
+        @historyCursor += 1
+        @historyCursor = @history.length - 1 if @historyCursor > @history.length - 1
+        ev.preventDefault()
+      console.log @history, @historyCursor
 
   unregisterEvents: () ->
     document.body.removeEventListener 'keydown', @onKeydown

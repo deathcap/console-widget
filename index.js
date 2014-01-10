@@ -31,6 +31,8 @@
       if ((_base3 = this.opts).font == null) {
         _base3.font = '12pt Menlo, Courier, \'Courier New\', monospace';
       }
+      this.history = [];
+      this.historyCursor = this.history.length;
       this.createNodes();
       this.registerEvents();
     }
@@ -94,14 +96,26 @@
         var key;
         key = vkey[ev.keyCode];
         if (key === '<enter>') {
-          _this.lastInput = _this.inputNode.value;
+          _this.history.push(_this.inputNode.value);
+          _this.historyCursor = _this.history.length - 1;
           _this.emit('input', _this.inputNode.value);
-          return _this.inputNode.value = '';
+          _this.inputNode.value = '';
         } else if (key === '<up>') {
-          if (_this.lastInput != null) {
-            return _this.inputNode.value = _this.lastInput;
+          _this.inputNode.value = _this.history[_this.historyCursor];
+          _this.historyCursor -= 1;
+          if (_this.historyCursor < 0) {
+            _this.historyCursor = 0;
           }
+          ev.preventDefault();
+        } else if (key === '<down>') {
+          _this.inputNode.value = _this.history[_this.historyCursor];
+          _this.historyCursor += 1;
+          if (_this.historyCursor > _this.history.length - 1) {
+            _this.historyCursor = _this.history.length - 1;
+          }
+          ev.preventDefault();
         }
+        return console.log(_this.history, _this.historyCursor);
       });
     };
 
