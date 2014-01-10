@@ -58,6 +58,7 @@ class ConsoleWidget extends EventEmitter
     bottom: 0px;
     position: absolute;
     font: #{@opts.font};
+    background-image: linear-gradient(rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.4) 100%);
     "
 
     @outputNode = document.createElement('div')
@@ -119,8 +120,6 @@ class ConsoleWidget extends EventEmitter
           @outputNode.scrollByLines(MAX_LINES)
         else
           @outputNode.scrollByPages(1)
-
-      console.log @history, @historyCursor
 
   unregisterEvents: () ->
     document.body.removeEventListener 'keydown', @onKeydown

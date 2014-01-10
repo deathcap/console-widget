@@ -80,7 +80,7 @@
 
     ConsoleWidget.prototype.createNodes = function() {
       this.containerNode = document.createElement('div');
-      this.containerNode.setAttribute('style', "    width: " + this.opts.widthPx + "px;    height: " + (this.opts.lineHeightPx * this.opts.rows) + "px;    border: 1px solid white;    color: white;    visibility: hidden;    bottom: 0px;    position: absolute;    font: " + this.opts.font + ";    ");
+      this.containerNode.setAttribute('style', "    width: " + this.opts.widthPx + "px;    height: " + (this.opts.lineHeightPx * this.opts.rows) + "px;    border: 1px solid white;    color: white;    visibility: hidden;    bottom: 0px;    position: absolute;    font: " + this.opts.font + ";    background-image: linear-gradient(rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.4) 100%);    ");
       this.outputNode = document.createElement('div');
       this.outputNode.setAttribute('style', "    overflow-y: scroll;     width: 100%;    height: " + (this.opts.lineHeightPx * (this.opts.rows - 1)) + "px;    ");
       this.inputNode = document.createElement('input');
@@ -102,7 +102,7 @@
           _this.history.push(_this.inputNode.value);
           _this.historyCursor = _this.history.length - 1;
           _this.emit('input', _this.inputNode.value);
-          _this.inputNode.value = '';
+          return _this.inputNode.value = '';
         } else if (key === '<up>') {
           if (_this.history[_this.historyCursor] != null) {
             _this.inputNode.value = _this.history[_this.historyCursor];
@@ -111,7 +111,7 @@
           if (_this.historyCursor < 0) {
             _this.historyCursor = 0;
           }
-          ev.preventDefault();
+          return ev.preventDefault();
         } else if (key === '<down>') {
           if (_this.history[_this.historyCursor] != null) {
             _this.inputNode.value = _this.history[_this.historyCursor];
@@ -120,25 +120,24 @@
           if (_this.historyCursor > _this.history.length - 1) {
             _this.historyCursor = _this.history.length - 1;
           }
-          ev.preventDefault();
+          return ev.preventDefault();
         } else if (key === '<page-up>') {
           if (ev.shiftKey) {
-            _this.outputNode.scrollByLines(-1);
+            return _this.outputNode.scrollByLines(-1);
           } else if (ev.ctrlKey || ev.metaKey) {
-            _this.outputNode.scrollByLines(-MAX_LINES);
+            return _this.outputNode.scrollByLines(-MAX_LINES);
           } else {
-            _this.outputNode.scrollByPages(-1);
+            return _this.outputNode.scrollByPages(-1);
           }
         } else if (key === '<page-down>') {
           if (ev.shiftKey) {
-            _this.outputNode.scrollByLines(1);
+            return _this.outputNode.scrollByLines(1);
           } else if (ev.ctrlKey || ev.metaKey) {
-            _this.outputNode.scrollByLines(MAX_LINES);
+            return _this.outputNode.scrollByLines(MAX_LINES);
           } else {
-            _this.outputNode.scrollByPages(1);
+            return _this.outputNode.scrollByPages(1);
           }
         }
-        return console.log(_this.history, _this.historyCursor);
       });
     };
 
