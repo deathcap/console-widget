@@ -113,21 +113,29 @@
           _this.emit('input', _this.inputNode.value);
           return _this.inputNode.value = '';
         } else if (key === '<up>') {
-          if (_this.history[_this.historyCursor] != null) {
-            _this.inputNode.value = _this.history[_this.historyCursor];
-          }
-          _this.historyCursor -= 1;
-          if (_this.historyCursor < 0) {
-            _this.historyCursor = 0;
+          if (ev.shiftKey) {
+            _this.outputNode.scrollByLines(-1);
+          } else {
+            if (_this.history[_this.historyCursor] != null) {
+              _this.inputNode.value = _this.history[_this.historyCursor];
+            }
+            _this.historyCursor -= 1;
+            if (_this.historyCursor < 0) {
+              _this.historyCursor = 0;
+            }
           }
           return ev.preventDefault();
         } else if (key === '<down>') {
-          if (_this.history[_this.historyCursor] != null) {
-            _this.inputNode.value = _this.history[_this.historyCursor];
-          }
-          _this.historyCursor += 1;
-          if (_this.historyCursor > _this.history.length - 1) {
-            _this.historyCursor = _this.history.length - 1;
+          if (ev.shiftKey) {
+            _this.outputNode.scrollByLines(1);
+          } else {
+            if (_this.history[_this.historyCursor] != null) {
+              _this.inputNode.value = _this.history[_this.historyCursor];
+            }
+            _this.historyCursor += 1;
+            if (_this.historyCursor > _this.history.length - 1) {
+              _this.historyCursor = _this.history.length - 1;
+            }
           }
           return ev.preventDefault();
         } else if (key === '<page-up>') {
