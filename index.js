@@ -96,6 +96,9 @@
         var key;
         key = vkey[ev.keyCode];
         if (key === '<enter>') {
+          if (_this.inputNode.value.length === 0) {
+            return;
+          }
           _this.history.push(_this.inputNode.value);
           _this.historyCursor = _this.history.length - 1;
           _this.emit('input', _this.inputNode.value);

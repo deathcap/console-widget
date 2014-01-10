@@ -89,6 +89,8 @@ class ConsoleWidget extends EventEmitter
       key = vkey[ev.keyCode]
 
       if key == '<enter>'
+        return if @inputNode.value.length == 0
+
         @history.push @inputNode.value
         @historyCursor = @history.length - 1
         @emit 'input', @inputNode.value
