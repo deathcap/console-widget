@@ -52,7 +52,7 @@ class ConsoleWidget extends EventEmitter
     @inputNode.value = text
 
   scrollOutput: () ->
-    @outputNode.scrollByLines(MAX_LINES + 1)
+    @outputNode.scrollByLines?(MAX_LINES + 1)
 
   createNodes: () ->
     @containerNode = document.createElement('div')
@@ -105,7 +105,7 @@ class ConsoleWidget extends EventEmitter
         @inputNode.value = ''
       else if key == '<up>'
         if ev.shiftKey
-          @outputNode.scrollByLines(-1)
+          @outputNode.scrollByLines?(-1)
         else
           @inputNode.value = @history[@historyCursor] if @history[@historyCursor]?
           @historyCursor -= 1
@@ -113,7 +113,7 @@ class ConsoleWidget extends EventEmitter
         ev.preventDefault()
       else if key == '<down>'
         if ev.shiftKey
-          @outputNode.scrollByLines(1)
+          @outputNode.scrollByLines?(1)
         else
           @inputNode.value = @history[@historyCursor] if @history[@historyCursor]?
           @historyCursor += 1
@@ -121,18 +121,18 @@ class ConsoleWidget extends EventEmitter
         ev.preventDefault()
       else if key == '<page-up>'
         if ev.shiftKey
-          @outputNode.scrollByLines(-1)
+          @outputNode.scrollByLines?(-1)
         else if ev.ctrlKey or ev.metaKey
-          @outputNode.scrollByLines(-MAX_LINES)
+          @outputNode.scrollByLines?(-MAX_LINES)
         else
-          @outputNode.scrollByPages(-1)
+          @outputNode.scrollByPages?(-1)
       else if key == '<page-down>'
         if ev.shiftKey
-          @outputNode.scrollByLines(1)
+          @outputNode.scrollByLines?(1)
         else if ev.ctrlKey or ev.metaKey
-          @outputNode.scrollByLines(MAX_LINES)
+          @outputNode.scrollByLines?(MAX_LINES)
         else
-          @outputNode.scrollByPages(1)
+          @outputNode.scrollByPages?(1)
       else if key == '<escape>'
         @close()
 
