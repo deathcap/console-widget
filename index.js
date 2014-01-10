@@ -7,7 +7,9 @@
   containerNode.setAttribute('style', '\
 width: 200px;\
 height: 100px;\
-border: 1px solid black');
+border: 1px solid white;\
+color: black;\
+');
 
   outputNode = document.createElement('div');
 
@@ -27,8 +29,9 @@ height: 100%;\
   inputNode.setAttribute('style', '\
 width: 100%;\
 padding: 0px;\
-border: 1px dashed black;\
+border: 1px dashed white;\
 background-color: transparent;\
+color: white;\
 ');
 
   containerNode.appendChild(outputNode);
@@ -37,6 +40,6 @@ background-color: transparent;\
 
   document.body.appendChild(containerNode);
 
-  document.body.style.backgroundColor = 'lightblue';
+  document.body.style.backgroundColor = 'black';
 
 }).call(this);
