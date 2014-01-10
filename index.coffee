@@ -24,16 +24,14 @@ class ConsoleWidget extends EventEmitter
   hide: () ->
     @containerNode.style.visibility = 'hidden'
 
-  focusInput: () ->
-    @inputNode.focus()
-
-  setInput: (text) ->
-    @inputNode.value = text
-
   open: (text=undefined) ->
     @show()
     @setInput(text) if text?
     @focusInput()
+
+  close: () ->
+    @unregisterEvents()
+    @hide()
 
   log: (text) ->
     @logNode(document.createTextNode(text))
@@ -43,7 +41,13 @@ class ConsoleWidget extends EventEmitter
     @outputNode.appendChild(document.createElement('br'))
     @scrollOutput()
     # TODO: discard last lines
-  
+ 
+  focusInput: () ->
+    @inputNode.focus()
+
+  setInput: (text) ->
+    @inputNode.value = text
+
   scrollOutput: () ->
     @outputNode.scrollByLines(MAX_LINES + 1)
 
@@ -120,6 +124,8 @@ class ConsoleWidget extends EventEmitter
           @outputNode.scrollByLines(MAX_LINES)
         else
           @outputNode.scrollByPages(1)
+      else if key == '<escape>'
+        @close()
 
   unregisterEvents: () ->
     document.body.removeEventListener 'keydown', @onKeydown

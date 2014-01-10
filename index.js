@@ -45,14 +45,6 @@
       return this.containerNode.style.visibility = 'hidden';
     };
 
-    ConsoleWidget.prototype.focusInput = function() {
-      return this.inputNode.focus();
-    };
-
-    ConsoleWidget.prototype.setInput = function(text) {
-      return this.inputNode.value = text;
-    };
-
     ConsoleWidget.prototype.open = function(text) {
       if (text == null) {
         text = void 0;
@@ -64,6 +56,11 @@
       return this.focusInput();
     };
 
+    ConsoleWidget.prototype.close = function() {
+      this.unregisterEvents();
+      return this.hide();
+    };
+
     ConsoleWidget.prototype.log = function(text) {
       return this.logNode(document.createTextNode(text));
     };
@@ -72,6 +69,14 @@
       this.outputNode.appendChild(node);
       this.outputNode.appendChild(document.createElement('br'));
       return this.scrollOutput();
+    };
+
+    ConsoleWidget.prototype.focusInput = function() {
+      return this.inputNode.focus();
+    };
+
+    ConsoleWidget.prototype.setInput = function(text) {
+      return this.inputNode.value = text;
     };
 
     ConsoleWidget.prototype.scrollOutput = function() {
@@ -137,6 +142,8 @@
           } else {
             return _this.outputNode.scrollByPages(1);
           }
+        } else if (key === '<escape>') {
+          return _this.close();
         }
       });
     };
