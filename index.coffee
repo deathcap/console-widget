@@ -7,7 +7,7 @@ MAX_LINES = 999
 class ConsoleWidget extends EventEmitter
   constructor: (@opts) ->
     @opts ?= {}
-    @opts.widthPx ?= 200
+    @opts.widthPx ?= 500
     @opts.rows ?= 10
     @opts.lineHeightPx ?= 20
     @opts.font ?= '12pt Menlo, Courier, \'Courier New\', monospace'

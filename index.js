@@ -20,7 +20,7 @@
         this.opts = {};
       }
       if ((_base = this.opts).widthPx == null) {
-        _base.widthPx = 200;
+        _base.widthPx = 500;
       }
       if ((_base1 = this.opts).rows == null) {
         _base1.rows = 10;
