@@ -1,7 +1,7 @@
 
 EventEmitter = (require 'events').EventEmitter
 
-class ConsoleWidget
+class ConsoleWidget extends EventEmitter
   constructor: () ->
     @createNodes()
     @registerEvents()
@@ -17,7 +17,7 @@ class ConsoleWidget
 
     @outputNode = document.createElement('div')
     @outputNode.setAttribute 'style', '
-    overflow-y: scroll;
+    overflow-y: scroll; /* TODO: scrollbar styles for better visibility */
     width: 100%;
     height: 100%;
     color: white;
@@ -39,22 +39,25 @@ class ConsoleWidget
     @containerNode.appendChild(@outputNode)
     @containerNode.appendChild(@inputNode)
 
+  log: (text) ->
+    @outputNode.appendChild(document.createTextNode(text))
+    @outputNode.appendChild(document.createElement('br'))
+    # TODO: on log, auto-scroll down, discard last lines
+
   registerEvents: () ->
     document.body.addEventListener 'keydown', @onKeydown = (ev) =>
       return if ev.keyCode != 13
 
-      @outputNode.appendChild(document.createTextNode(@inputNode.value))
-      @outputNode.appendChild(document.createElement('br'))
-      # TODO: on log, auto-scroll down, discard last lines
-      # TODO: on input, emit event
-
+      @emit 'input', @inputNode.value
       @inputNode.value = ''
-
 
   unregisterEvents: () ->
     document.body.removeEventListener 'keydown', @onKeydown
 
 consoleWidget = new ConsoleWidget()
+
+consoleWidget.on 'input', (text) ->
+  consoleWidget.log text
 
 document.body.appendChild(consoleWidget.containerNode)
 document.body.style.backgroundColor = 'black'   # to show transparency
