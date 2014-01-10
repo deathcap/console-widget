@@ -12,16 +12,19 @@
     __extends(ConsoleWidget, _super);
 
     function ConsoleWidget(opts) {
-      var _base, _base1;
+      var _base, _base1, _base2;
       this.opts = opts;
       if (this.opts == null) {
         this.opts = {};
       }
-      if ((_base = this.opts).consoleHeight == null) {
-        _base.consoleHeight = 100;
+      if ((_base = this.opts).widthPx == null) {
+        _base.widthPx = 200;
       }
-      if ((_base1 = this.opts).consoleWidth == null) {
-        _base1.consoleWidth = 200;
+      if ((_base1 = this.opts).rows == null) {
+        _base1.rows = 10;
+      }
+      if ((_base2 = this.opts).lineHeightPx == null) {
+        _base2.lineHeightPx = 20;
       }
       this.createNodes();
       this.registerEvents();
@@ -70,17 +73,13 @@
 
     ConsoleWidget.prototype.createNodes = function() {
       this.containerNode = document.createElement('div');
-      this.containerNode.setAttribute('style', "    width: " + this.opts.consoleWidth + "px;    height: " + this.opts.consoleHeight + "px;    border: 1px solid white;    color: white;    visibility: hidden;    bottom: 0px;    position: absolute;    ");
+      this.containerNode.setAttribute('style', "    width: " + this.opts.widthPx + "px;    height: " + (this.opts.lineHeightPx * this.opts.rows) + "px;    border: 1px solid white;    color: white;    visibility: hidden;    bottom: 0px;    position: absolute;    ");
       this.outputNode = document.createElement('div');
-      this.outputNode.setAttribute('style', '\
-    overflow-y: scroll; \
-    width: 100%;\
-    height: 80%;\
-    ');
+      this.outputNode.setAttribute('style', "    overflow-y: scroll;     width: 100%;    height: " + (this.opts.lineHeightPx * (this.opts.rows - 1)) + "px;    ");
       this.inputNode = document.createElement('input');
       this.inputNode.setAttribute('style', '\
     width: 100%;\
-    height: 20px;\
+    height: #{@opts.lineHeightPx}px;\
     padding: 0px;\
     border: 1px dashed white;\
     background-color: transparent;\

@@ -6,8 +6,10 @@ MAX_LINES = 999
 class ConsoleWidget extends EventEmitter
   constructor: (@opts) ->
     @opts ?= {}
-    @opts.consoleHeight ?= 100
-    @opts.consoleWidth ?= 200
+    @opts.widthPx ?= 200
+
+    @opts.rows ?= 10
+    @opts.lineHeightPx ?= 20
 
     @createNodes()
     @registerEvents()
@@ -44,8 +46,8 @@ class ConsoleWidget extends EventEmitter
   createNodes: () ->
     @containerNode = document.createElement('div')
     @containerNode.setAttribute 'style', "
-    width: #{@opts.consoleWidth}px;
-    height: #{@opts.consoleHeight}px;
+    width: #{@opts.widthPx}px;
+    height: #{@opts.lineHeightPx * @opts.rows}px;
     border: 1px solid white;
     color: white;
     visibility: hidden;
@@ -54,17 +56,17 @@ class ConsoleWidget extends EventEmitter
     "
 
     @outputNode = document.createElement('div')
-    @outputNode.setAttribute 'style', '
+    @outputNode.setAttribute 'style', "
     overflow-y: scroll; 
     width: 100%;
-    height: 80%;
-    '
+    height: #{@opts.lineHeightPx * (@opts.rows - 1)}px;
+    "
     # TODO: scrollbar styles for better visibility 
 
     @inputNode = document.createElement('input')
     @inputNode.setAttribute 'style', '
     width: 100%;
-    height: 20px;
+    height: #{@opts.lineHeightPx}px;
     padding: 0px;
     border: 1px dashed white;
     background-color: transparent;
