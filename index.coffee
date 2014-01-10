@@ -1,5 +1,6 @@
 
 EventEmitter = (require 'events').EventEmitter
+vkey = require 'vkey'
 
 MAX_LINES = 999
 
@@ -82,10 +83,14 @@ class ConsoleWidget extends EventEmitter
 
   registerEvents: () ->
     document.body.addEventListener 'keydown', @onKeydown = (ev) =>
-      return if ev.keyCode != 13
+      key = vkey[ev.keyCode]
 
-      @emit 'input', @inputNode.value
-      @inputNode.value = ''
+      if key == '<enter>'
+        @lastInput = @inputNode.value
+        @emit 'input', @inputNode.value
+        @inputNode.value = ''
+      else if key == '<up>'
+        @inputNode.value = @lastInput if @lastInput?
 
   unregisterEvents: () ->
     document.body.removeEventListener 'keydown', @onKeydown
