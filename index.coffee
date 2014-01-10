@@ -16,7 +16,6 @@ class ConsoleWidget extends EventEmitter
     @historyCursor = @history.length
 
     @createNodes()
-    @registerEvents()
 
   show: () ->
     @containerNode.style.visibility = ''
@@ -27,11 +26,15 @@ class ConsoleWidget extends EventEmitter
   open: (text=undefined) ->
     @show()
     @setInput(text) if text?
+    @registerEvents()
     @focusInput()
 
   close: () ->
     @unregisterEvents()
     @hide()
+
+  isOpen: () ->
+    @containerNode.style.visibility != 'hidden'
 
   log: (text) ->
     @logNode(document.createTextNode(text))
@@ -140,6 +143,19 @@ consoleWidget.open('/')
 consoleWidget.on 'input', (text) ->
   consoleWidget.log text
 
-# to show transparency
+document.body.addEventListener 'keydown', (ev) ->
+  return if consoleWidget.isOpen()
+  key = vkey[ev.keyCode]
+  if key == '/'
+    ev.preventDefault()
+    consoleWidget.open('/')
+  else if key == '.'
+    ev.preventDefault()
+    consoleWidget.open('.')
+  else if key == 'T'
+    ev.preventDefault()
+    consoleWidget.open()
+
+# to show off transparency
 document.body.style.background = 'url(http://i.imgur.com/bmm7HK4.png)'
 document.body.style.backgroundSize = '100% auto'

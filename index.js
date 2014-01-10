@@ -34,7 +34,6 @@
       this.history = [];
       this.historyCursor = this.history.length;
       this.createNodes();
-      this.registerEvents();
     }
 
     ConsoleWidget.prototype.show = function() {
@@ -53,12 +52,17 @@
       if (text != null) {
         this.setInput(text);
       }
+      this.registerEvents();
       return this.focusInput();
     };
 
     ConsoleWidget.prototype.close = function() {
       this.unregisterEvents();
       return this.hide();
+    };
+
+    ConsoleWidget.prototype.isOpen = function() {
+      return this.containerNode.style.visibility !== 'hidden';
     };
 
     ConsoleWidget.prototype.log = function(text) {
@@ -166,6 +170,24 @@
 
   consoleWidget.on('input', function(text) {
     return consoleWidget.log(text);
+  });
+
+  document.body.addEventListener('keydown', function(ev) {
+    var key;
+    if (consoleWidget.isOpen()) {
+      return;
+    }
+    key = vkey[ev.keyCode];
+    if (key === '/') {
+      ev.preventDefault();
+      return consoleWidget.open('/');
+    } else if (key === '.') {
+      ev.preventDefault();
+      return consoleWidget.open('.');
+    } else if (key === 'T') {
+      ev.preventDefault();
+      return consoleWidget.open();
+    }
   });
 
   document.body.style.background = 'url(http://i.imgur.com/bmm7HK4.png)';
