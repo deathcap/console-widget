@@ -28,6 +28,7 @@ height: 100%;\
 width: 100%;\
 padding: 0px;\
 border: 1px dashed black;\
+background-color: transparent;\
 ');
 
   containerNode.appendChild(outputNode);
@@ -35,5 +36,7 @@ border: 1px dashed black;\
   containerNode.appendChild(inputNode);
 
   document.body.appendChild(containerNode);
+
+  document.body.style.backgroundColor = 'lightblue';
 
 }).call(this);
