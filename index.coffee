@@ -6,13 +6,20 @@ class ConsoleWidget extends EventEmitter
     @createNodes()
     @registerEvents()
 
+  show: () ->
+    @containerNode.style.visibility = ''
+
+  hide: () ->
+    @containerNode.style.visibility = 'hidden'
+
   createNodes: () ->
     @containerNode = document.createElement('div')
     @containerNode.setAttribute 'style', '
     width: 200px;
     height: 100px;
     border: 1px solid white;
-    color: black;
+    color: white;
+    visibility: hidden;
     '
 
     @outputNode = document.createElement('div')
@@ -20,7 +27,6 @@ class ConsoleWidget extends EventEmitter
     overflow-y: scroll; /* TODO: scrollbar styles for better visibility */
     width: 100%;
     height: 100%;
-    color: white;
     '
 
     for i in [0..3]
@@ -39,6 +45,8 @@ class ConsoleWidget extends EventEmitter
     @containerNode.appendChild(@outputNode)
     @containerNode.appendChild(@inputNode)
 
+    document.body.appendChild(@containerNode)  # note: starts off hidden
+
   log: (text) ->
     @outputNode.appendChild(document.createTextNode(text))
     @outputNode.appendChild(document.createElement('br'))
@@ -55,9 +63,9 @@ class ConsoleWidget extends EventEmitter
     document.body.removeEventListener 'keydown', @onKeydown
 
 consoleWidget = new ConsoleWidget()
+consoleWidget.show()
 
 consoleWidget.on 'input', (text) ->
   consoleWidget.log text
 
-document.body.appendChild(consoleWidget.containerNode)
 document.body.style.backgroundColor = 'black'   # to show transparency

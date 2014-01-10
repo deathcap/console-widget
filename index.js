@@ -14,6 +14,14 @@
       this.registerEvents();
     }
 
+    ConsoleWidget.prototype.show = function() {
+      return this.containerNode.style.visibility = '';
+    };
+
+    ConsoleWidget.prototype.hide = function() {
+      return this.containerNode.style.visibility = 'hidden';
+    };
+
     ConsoleWidget.prototype.createNodes = function() {
       var i, _i;
       this.containerNode = document.createElement('div');
@@ -21,14 +29,14 @@
     width: 200px;\
     height: 100px;\
     border: 1px solid white;\
-    color: black;\
+    color: white;\
+    visibility: hidden;\
     ');
       this.outputNode = document.createElement('div');
       this.outputNode.setAttribute('style', '\
     overflow-y: scroll; /* TODO: scrollbar styles for better visibility */\
     width: 100%;\
     height: 100%;\
-    color: white;\
     ');
       for (i = _i = 0; _i <= 3; i = ++_i) {
         this.outputNode.appendChild(document.createTextNode('hello'));
@@ -43,7 +51,8 @@
     color: white;\
     ');
       this.containerNode.appendChild(this.outputNode);
-      return this.containerNode.appendChild(this.inputNode);
+      this.containerNode.appendChild(this.inputNode);
+      return document.body.appendChild(this.containerNode);
     };
 
     ConsoleWidget.prototype.log = function(text) {
@@ -72,11 +81,11 @@
 
   consoleWidget = new ConsoleWidget();
 
+  consoleWidget.show();
+
   consoleWidget.on('input', function(text) {
     return consoleWidget.log(text);
   });
-
-  document.body.appendChild(consoleWidget.containerNode);
 
   document.body.style.backgroundColor = 'black';
 
