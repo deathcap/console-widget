@@ -11,7 +11,18 @@
   ConsoleWidget = (function(_super) {
     __extends(ConsoleWidget, _super);
 
-    function ConsoleWidget() {
+    function ConsoleWidget(opts) {
+      var _base, _base1;
+      this.opts = opts;
+      if (this.opts == null) {
+        this.opts = {};
+      }
+      if ((_base = this.opts).consoleHeight == null) {
+        _base.consoleHeight = 100;
+      }
+      if ((_base1 = this.opts).consoleWidth == null) {
+        _base1.consoleWidth = 200;
+      }
       this.createNodes();
       this.registerEvents();
     }
@@ -59,22 +70,17 @@
 
     ConsoleWidget.prototype.createNodes = function() {
       this.containerNode = document.createElement('div');
-      this.containerNode.setAttribute('style', '\
-    width: 200px;\
-    height: 100px;\
-    border: 1px solid white;\
-    color: white;\
-    visibility: hidden;\
-    ');
+      this.containerNode.setAttribute('style', "    width: " + this.opts.consoleWidth + "px;    height: " + this.opts.consoleHeight + "px;    border: 1px solid white;    color: white;    visibility: hidden;    bottom: 0px;    position: absolute;    ");
       this.outputNode = document.createElement('div');
       this.outputNode.setAttribute('style', '\
-    overflow-y: scroll; /* TODO: scrollbar styles for better visibility */\
+    overflow-y: scroll; \
     width: 100%;\
-    height: 100%;\
+    height: 80%;\
     ');
       this.inputNode = document.createElement('input');
       this.inputNode.setAttribute('style', '\
     width: 100%;\
+    height: 20px;\
     padding: 0px;\
     border: 1px dashed white;\
     background-color: transparent;\
@@ -116,6 +122,8 @@
     return consoleWidget.log(text);
   });
 
-  document.body.style.backgroundColor = 'black';
+  document.body.style.background = 'url(http://i.imgur.com/bmm7HK4.png)';
+
+  document.body.style.backgroundSize = '100% auto';
 
 }).call(this);

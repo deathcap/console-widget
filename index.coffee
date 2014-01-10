@@ -4,7 +4,11 @@ EventEmitter = (require 'events').EventEmitter
 MAX_LINES = 999
 
 class ConsoleWidget extends EventEmitter
-  constructor: () ->
+  constructor: (@opts) ->
+    @opts ?= {}
+    @opts.consoleHeight ?= 100
+    @opts.consoleWidth ?= 200
+
     @createNodes()
     @registerEvents()
 
@@ -39,24 +43,28 @@ class ConsoleWidget extends EventEmitter
 
   createNodes: () ->
     @containerNode = document.createElement('div')
-    @containerNode.setAttribute 'style', '
-    width: 200px;
-    height: 100px;
+    @containerNode.setAttribute 'style', "
+    width: #{@opts.consoleWidth}px;
+    height: #{@opts.consoleHeight}px;
     border: 1px solid white;
     color: white;
     visibility: hidden;
-    '
+    bottom: 0px;
+    position: absolute;
+    "
 
     @outputNode = document.createElement('div')
     @outputNode.setAttribute 'style', '
-    overflow-y: scroll; /* TODO: scrollbar styles for better visibility */
+    overflow-y: scroll; 
     width: 100%;
-    height: 100%;
+    height: 80%;
     '
+    # TODO: scrollbar styles for better visibility 
 
     @inputNode = document.createElement('input')
     @inputNode.setAttribute 'style', '
     width: 100%;
+    height: 20px;
     padding: 0px;
     border: 1px dashed white;
     background-color: transparent;
@@ -88,4 +96,6 @@ consoleWidget.open('/')
 consoleWidget.on 'input', (text) ->
   consoleWidget.log text
 
-document.body.style.backgroundColor = 'black'   # to show transparency
+# to show transparency
+document.body.style.background = 'url(http://i.imgur.com/bmm7HK4.png)'
+document.body.style.backgroundSize = '100% auto'
