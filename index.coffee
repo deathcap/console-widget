@@ -12,6 +12,17 @@ class ConsoleWidget extends EventEmitter
   hide: () ->
     @containerNode.style.visibility = 'hidden'
 
+  focusInput: () ->
+    @inputNode.focus()
+
+  setInput: (text) ->
+    @inputNode.value = text
+
+  open: (text=undefined) ->
+    @show()
+    @setInput(text) if text?
+    @focusInput()
+
   createNodes: () ->
     @containerNode = document.createElement('div')
     @containerNode.setAttribute 'style', '
@@ -63,7 +74,7 @@ class ConsoleWidget extends EventEmitter
     document.body.removeEventListener 'keydown', @onKeydown
 
 consoleWidget = new ConsoleWidget()
-consoleWidget.show()
+consoleWidget.open('/')
 
 consoleWidget.on 'input', (text) ->
   consoleWidget.log text

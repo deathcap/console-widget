@@ -22,6 +22,25 @@
       return this.containerNode.style.visibility = 'hidden';
     };
 
+    ConsoleWidget.prototype.focusInput = function() {
+      return this.inputNode.focus();
+    };
+
+    ConsoleWidget.prototype.setInput = function(text) {
+      return this.inputNode.value = text;
+    };
+
+    ConsoleWidget.prototype.open = function(text) {
+      if (text == null) {
+        text = void 0;
+      }
+      this.show();
+      if (text != null) {
+        this.setInput(text);
+      }
+      return this.focusInput();
+    };
+
     ConsoleWidget.prototype.createNodes = function() {
       var i, _i;
       this.containerNode = document.createElement('div');
@@ -81,7 +100,7 @@
 
   consoleWidget = new ConsoleWidget();
 
-  consoleWidget.show();
+  consoleWidget.open('/');
 
   consoleWidget.on('input', function(text) {
     return consoleWidget.log(text);
