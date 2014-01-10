@@ -9,7 +9,7 @@ color: black;
 
 outputNode = document.createElement('div')
 outputNode.setAttribute 'style', '
-overflow: auto;
+overflow-y: scroll;
 width: 100%;
 height: 100%;
 color: white;
