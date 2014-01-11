@@ -11,6 +11,7 @@ class ConsoleWidget extends EventEmitter
     @opts.rows ?= 10
     @opts.lineHeightPx ?= 20
     @opts.font ?= '12pt Menlo, Courier, \'Courier New\', monospace'
+    @opts.backgroundImage ?= 'linear-gradient(rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.6) 100%)'
 
     @history = []
     @historyCursor = @history.length
@@ -65,7 +66,7 @@ class ConsoleWidget extends EventEmitter
     bottom: 0px;
     position: absolute;
     font: #{@opts.font};
-    background-image: linear-gradient(rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.4) 100%);
+    background-image: #{@opts.backgroundImage};
     "
 
     @outputNode = document.createElement('div')

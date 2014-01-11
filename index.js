@@ -14,7 +14,7 @@
     __extends(ConsoleWidget, _super);
 
     function ConsoleWidget(opts) {
-      var _base, _base1, _base2, _base3;
+      var _base, _base1, _base2, _base3, _base4;
       this.opts = opts;
       if (this.opts == null) {
         this.opts = {};
@@ -30,6 +30,9 @@
       }
       if ((_base3 = this.opts).font == null) {
         _base3.font = '12pt Menlo, Courier, \'Courier New\', monospace';
+      }
+      if ((_base4 = this.opts).backgroundImage == null) {
+        _base4.backgroundImage = 'linear-gradient(rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.6) 100%)';
       }
       this.history = [];
       this.historyCursor = this.history.length;
@@ -90,7 +93,7 @@
 
     ConsoleWidget.prototype.createNodes = function() {
       this.containerNode = document.createElement('div');
-      this.containerNode.setAttribute('style', "    width: " + this.opts.widthPx + "px;    height: " + (this.opts.lineHeightPx * this.opts.rows) + "px;    border: 1px solid white;    color: white;    visibility: hidden;    bottom: 0px;    position: absolute;    font: " + this.opts.font + ";    background-image: linear-gradient(rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.4) 100%);    ");
+      this.containerNode.setAttribute('style', "    width: " + this.opts.widthPx + "px;    height: " + (this.opts.lineHeightPx * this.opts.rows) + "px;    border: 1px solid white;    color: white;    visibility: hidden;    bottom: 0px;    position: absolute;    font: " + this.opts.font + ";    background-image: " + this.opts.backgroundImage + ";    ");
       this.outputNode = document.createElement('div');
       this.outputNode.setAttribute('style', "    overflow-y: scroll;     width: 100%;    height: " + (this.opts.lineHeightPx * (this.opts.rows - 1)) + "px;    ");
       this.inputNode = document.createElement('input');
