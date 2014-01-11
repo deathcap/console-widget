@@ -14,7 +14,7 @@
     __extends(ConsoleWidget, _super);
 
     function ConsoleWidget(opts) {
-      var _base, _base1, _base2, _base3, _base4;
+      var _base, _base1, _base2, _base3, _base4, _base5;
       this.opts = opts;
       if (this.opts == null) {
         this.opts = {};
@@ -33,6 +33,9 @@
       }
       if ((_base4 = this.opts).backgroundImage == null) {
         _base4.backgroundImage = 'linear-gradient(rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.6) 100%)';
+      }
+      if ((_base5 = this.opts).closeKeys == null) {
+        _base5.closeKeys = ['<escape>'];
       }
       this.history = [];
       this.historyCursor = this.history.length;
@@ -162,7 +165,7 @@
           } else {
             return typeof (_base7 = _this.outputNode).scrollByPages === "function" ? _base7.scrollByPages(1) : void 0;
           }
-        } else if (key === '<escape>') {
+        } else if (_this.opts.closeKeys.indexOf(key) !== -1) {
           return _this.close();
         }
       });

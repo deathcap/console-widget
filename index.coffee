@@ -12,6 +12,7 @@ class ConsoleWidget extends EventEmitter
     @opts.lineHeightPx ?= 20
     @opts.font ?= '12pt Menlo, Courier, \'Courier New\', monospace'
     @opts.backgroundImage ?= 'linear-gradient(rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.6) 100%)'
+    @opts.closeKeys ?= ['<escape>']
 
     @history = []
     @historyCursor = @history.length
@@ -134,7 +135,7 @@ class ConsoleWidget extends EventEmitter
           @outputNode.scrollByLines?(MAX_LINES)
         else
           @outputNode.scrollByPages?(1)
-      else if key == '<escape>'
+      else if @opts.closeKeys.indexOf(key) != -1
         @close()
 
   unregisterEvents: () ->
