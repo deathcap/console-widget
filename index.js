@@ -109,8 +109,9 @@
     ConsoleWidget.prototype.registerEvents = function() {
       var _this = this;
       return document.body.addEventListener('keydown', this.onKeydown = function(ev) {
-        var key, _base, _base1, _base2, _base3, _base4, _base5, _base6, _base7;
+        var key, preventDefault, _base, _base1, _base2, _base3, _base4, _base5, _base6, _base7;
         key = vkey[ev.keyCode];
+        preventDefault = true;
         if (key === '<enter>') {
           if (_this.inputNode.value.length === 0) {
             return;
@@ -118,7 +119,7 @@
           _this.history.push(_this.inputNode.value);
           _this.historyCursor = _this.history.length - 1;
           _this.emit('input', _this.inputNode.value);
-          return _this.inputNode.value = '';
+          _this.inputNode.value = '';
         } else if (key === '<up>') {
           if (ev.shiftKey) {
             if (typeof (_base = _this.outputNode).scrollByLines === "function") {
@@ -133,7 +134,6 @@
               _this.historyCursor = 0;
             }
           }
-          return ev.preventDefault();
         } else if (key === '<down>') {
           if (ev.shiftKey) {
             if (typeof (_base1 = _this.outputNode).scrollByLines === "function") {
@@ -148,25 +148,41 @@
               _this.historyCursor = _this.history.length - 1;
             }
           }
-          return ev.preventDefault();
         } else if (key === '<page-up>') {
           if (ev.shiftKey) {
-            return typeof (_base2 = _this.outputNode).scrollByLines === "function" ? _base2.scrollByLines(-1) : void 0;
+            if (typeof (_base2 = _this.outputNode).scrollByLines === "function") {
+              _base2.scrollByLines(-1);
+            }
           } else if (ev.ctrlKey || ev.metaKey) {
-            return typeof (_base3 = _this.outputNode).scrollByLines === "function" ? _base3.scrollByLines(-MAX_LINES) : void 0;
+            if (typeof (_base3 = _this.outputNode).scrollByLines === "function") {
+              _base3.scrollByLines(-MAX_LINES);
+            }
           } else {
-            return typeof (_base4 = _this.outputNode).scrollByPages === "function" ? _base4.scrollByPages(-1) : void 0;
+            if (typeof (_base4 = _this.outputNode).scrollByPages === "function") {
+              _base4.scrollByPages(-1);
+            }
           }
         } else if (key === '<page-down>') {
           if (ev.shiftKey) {
-            return typeof (_base5 = _this.outputNode).scrollByLines === "function" ? _base5.scrollByLines(1) : void 0;
+            if (typeof (_base5 = _this.outputNode).scrollByLines === "function") {
+              _base5.scrollByLines(1);
+            }
           } else if (ev.ctrlKey || ev.metaKey) {
-            return typeof (_base6 = _this.outputNode).scrollByLines === "function" ? _base6.scrollByLines(MAX_LINES) : void 0;
+            if (typeof (_base6 = _this.outputNode).scrollByLines === "function") {
+              _base6.scrollByLines(MAX_LINES);
+            }
           } else {
-            return typeof (_base7 = _this.outputNode).scrollByPages === "function" ? _base7.scrollByPages(1) : void 0;
+            if (typeof (_base7 = _this.outputNode).scrollByPages === "function") {
+              _base7.scrollByPages(1);
+            }
           }
         } else if (_this.opts.closeKeys.indexOf(key) !== -1) {
-          return _this.close();
+          _this.close();
+        } else {
+          preventDefault = false;
+        }
+        if (preventDefault) {
+          return ev.preventDefault();
         }
       });
     };

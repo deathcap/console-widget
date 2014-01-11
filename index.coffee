@@ -98,6 +98,8 @@ class ConsoleWidget extends EventEmitter
     document.body.addEventListener 'keydown', @onKeydown = (ev) =>
       key = vkey[ev.keyCode]
 
+      preventDefault = true
+
       if key == '<enter>'
         return if @inputNode.value.length == 0
 
@@ -112,7 +114,6 @@ class ConsoleWidget extends EventEmitter
           @inputNode.value = @history[@historyCursor] if @history[@historyCursor]?
           @historyCursor -= 1
           @historyCursor = 0 if @historyCursor < 0
-        ev.preventDefault()
       else if key == '<down>'
         if ev.shiftKey
           @outputNode.scrollByLines?(1)
@@ -120,7 +121,6 @@ class ConsoleWidget extends EventEmitter
           @inputNode.value = @history[@historyCursor] if @history[@historyCursor]?
           @historyCursor += 1
           @historyCursor = @history.length - 1 if @historyCursor > @history.length - 1
-        ev.preventDefault()
       else if key == '<page-up>'
         if ev.shiftKey
           @outputNode.scrollByLines?(-1)
@@ -137,6 +137,11 @@ class ConsoleWidget extends EventEmitter
           @outputNode.scrollByPages?(1)
       else if @opts.closeKeys.indexOf(key) != -1
         @close()
+      else
+        # let unrecognized keys pass through
+        preventDefault = false
+
+      ev.preventDefault() if preventDefault
 
   unregisterEvents: () ->
     document.body.removeEventListener 'keydown', @onKeydown
