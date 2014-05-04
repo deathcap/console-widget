@@ -24,6 +24,8 @@ class ConsoleWidget extends EventEmitter
 
   show: () ->
     @containerNode.style.visibility = ''
+    @containerNode.style.transition = ''
+    @containerNode.style.opacity = 1.0
     clearTimeout @hideTimer if @hideTimer?
 
   hide: () ->
@@ -43,7 +45,7 @@ class ConsoleWidget extends EventEmitter
     @isShown()
 
   isShown: () ->
-    @containerNode.style.visibility != 'hidden'
+    @containerNode.style.visibility != 'hidden' and @containerNode.style.opacity|0 != 0
 
   log: (text) ->
     @logNode(document.createTextNode(text))
@@ -60,8 +62,8 @@ class ConsoleWidget extends EventEmitter
     # TODO: discard last lines
 
   fadeOut: () ->
-    # TODO: CSS transition fadeout
-    @hide()
+    @containerNode.style.transition = 'opacity linear 1s' # TODO: add/remove CSS class instead of adding/removing style directly
+    @containerNode.style.opacity = 0.0
  
   focusInput: () ->
     @inputNode.focus()

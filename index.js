@@ -48,6 +48,8 @@
 
     ConsoleWidget.prototype.show = function() {
       this.containerNode.style.visibility = '';
+      this.containerNode.style.transition = '';
+      this.containerNode.style.opacity = 1.0;
       if (this.hideTimer != null) {
         return clearTimeout(this.hideTimer);
       }
@@ -79,7 +81,7 @@
     };
 
     ConsoleWidget.prototype.isShown = function() {
-      return this.containerNode.style.visibility !== 'hidden';
+      return this.containerNode.style.visibility !== 'hidden' && this.containerNode.style.opacity | 0 !== 0;
     };
 
     ConsoleWidget.prototype.log = function(text) {
@@ -97,7 +99,8 @@
     };
 
     ConsoleWidget.prototype.fadeOut = function() {
-      return this.hide();
+      this.containerNode.style.transition = 'opacity linear 1s';
+      return this.containerNode.style.opacity = 0.0;
     };
 
     ConsoleWidget.prototype.focusInput = function() {
