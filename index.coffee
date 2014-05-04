@@ -13,14 +13,18 @@ class ConsoleWidget extends EventEmitter
     @opts.font ?= '12pt Menlo, Courier, \'Courier New\', monospace'
     @opts.backgroundImage ?= 'linear-gradient(rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.6) 100%)'
     @opts.closeKeys ?= ['<escape>']
+    @opts.hideTimeout ?= 5000 # ms
 
     @history = []
     @historyCursor = @history.length
+
+    @hideTimer = undefined
 
     @createNodes()
 
   show: () ->
     @containerNode.style.visibility = ''
+    clearTimeout @hideTimer if @hideTimer?
 
   hide: () ->
     @containerNode.style.visibility = 'hidden'
@@ -36,16 +40,28 @@ class ConsoleWidget extends EventEmitter
     @hide()
 
   isOpen: () ->
+    @isShown()
+
+  isShown: () ->
     @containerNode.style.visibility != 'hidden'
 
   log: (text) ->
     @logNode(document.createTextNode(text))
 
   logNode: (node) ->
+    if not @isShown()
+      # if logged without shown, show then hide after a time interval
+      @show()
+      @hideTimer = setTimeout @fadeOut.bind(@), @opts.hideTimeout
+
     @outputNode.appendChild(node)
     @outputNode.appendChild(document.createElement('br'))
     @scrollOutput()
     # TODO: discard last lines
+
+  fadeOut: () ->
+    # TODO: CSS transition fadeout
+    @hide()
  
   focusInput: () ->
     @inputNode.focus()
