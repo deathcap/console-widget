@@ -2,18 +2,27 @@
   "name": "console-widget",
   "description": "",
   "version": "0.2.0",
+  "main": "console-widget.coffee",
   "repository": {
     "type": "git",
     "url": "git@github.com:deathcap/console-widget.git"
   },
   "keywords": [
-    "voxel"
+    "console",
+    "widget",
+    "html"
   ],
   "dependencies": {
-    "vkey": "0.0.3"
+    "vkey": "0.0.3",
+    "coffeeify": "^0.6.0"
   },
   "scripts": {
     "start": "beefy demo.js"
+  },
+  "browserify": {
+    "transform": [
+      "coffeeify"
+    ]
   },
   "license": "MIT"
 }
