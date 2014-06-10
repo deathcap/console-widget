@@ -70,6 +70,7 @@ class ConsoleWidget extends EventEmitter
 
   setInput: (text) ->
     @inputNode.value = text
+    @inputNode.setSelectionRange(text.length, text.length)
 
   scrollOutput: () ->
     @outputNode.scrollByLines?(MAX_LINES + 1)
