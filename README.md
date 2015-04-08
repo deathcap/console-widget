@@ -19,7 +19,7 @@ You can write text to the console output using:
 
 and handle user input by listening to the 'input' event:
 
-    consoleWidget.on('input', function(text)) {
+    consoleWidget.on('input', function(text) {
         consoleWidget.log('You wrote: ' + text);
     });
 
