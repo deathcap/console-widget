@@ -73,7 +73,9 @@ class ConsoleWidget extends EventEmitter
     @inputNode.setSelectionRange(text.length, text.length)
 
   scrollOutput: () ->
-    @outputNode.scrollByLines?(MAX_LINES + 1)
+    #@outputNode.scrollByLines?(MAX_LINES + 1) # nonstandard
+    # Scroll to very end (scrollHeight will be greater than scrollTop)
+    @outputNode.scrollTop = @outputNode.scrollHeight
 
   createNodes: () ->
     @containerNode = document.createElement('div')
