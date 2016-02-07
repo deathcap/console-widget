@@ -1,7 +1,7 @@
 {
   "name": "console-widget",
   "description": "",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "main": "console-widget.coffee",
   "repository": {
     "type": "git",
