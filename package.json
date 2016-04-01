@@ -2,7 +2,7 @@
   "name": "console-widget",
   "description": "",
   "version": "0.2.2",
-  "main": "console-widget.coffee",
+  "main": "console-widget.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:deathcap/console-widget.git"
