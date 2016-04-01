@@ -1,7 +1,7 @@
 {
   "name": "console-widget",
   "description": "",
-  "version": "0.2.2",
+  "version": "1.0.0",
   "main": "console-widget.js",
   "repository": {
     "type": "git",
