@@ -15,7 +15,7 @@ class ConsoleWidget extends EventEmitter {
     if (this.opts.rows === undefined) this.opts.rows = 10;
     if (this.opts.lineHeightPx === undefined) this.opts.lineHeightPx = 20;
     if (this.opts.font === undefined) this.opts.font = '12pt Menlo, Courier, \'Courier New\', monospace';
-    if (this.opts.backgoundImage === undefined) this.opts.backgroundImage = 'linear-gradient(rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.6) 100%)';
+    if (this.opts.backgroundImage === undefined) this.opts.backgroundImage = 'linear-gradient(rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.6) 100%)';
     if (this.opts.closeKeys === undefined) this.opts.closeKeys = ['<escape>'];
     if (this.opts.hideTimeout === undefined) this.opts.hideTimeout = 5000; // ms
 
